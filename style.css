@@ -1,0 +1,44 @@
+#app {
+  margin: 0 300px;
+}
+
+#header-container{
+  padding: 20px 0;
+  border-bottom: 1px solid #eee;
+}
+
+#body-container{
+  margin: 20px 0;
+}
+
+#body-head{
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+ul {
+  list-style-position: inside;
+  padding-left: 0;
+}
+
+ul li {
+  list-style: none;
+}
+
+.single-list{
+  padding: 10px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+  border: 1px solid #eee;
+}
+
+.check-done{
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 5px;
+}
+
+.delete-list{
+  font-size: 10px;
+  margin-left: 50px;
+}
