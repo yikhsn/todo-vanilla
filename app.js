@@ -17,11 +17,11 @@ var ViewController = ( function(){
       var taskHtml;
   
       taskHtml = 
-        '<li class="single-list list-%id%">' +
+        '<li id="list-%id%" class="single-list">' +
           '<div class="title-list">' +
             '<input type="checkbox" class="checked-list">' +
             '%desc%' +
-          '<i class="delete-list">Delete</i>' +
+          '<a href="" id="delete-list">Delete</a>' +
           '</div>' +
         '</li>';
 
@@ -29,6 +29,13 @@ var ViewController = ( function(){
       taskHtml = taskHtml.replace('%desc%', task.desc);
   
       document.getElementById('list').insertAdjacentHTML('beforeend', taskHtml);
+    },
+
+    deleteList: function(elementId){
+      var el;
+
+      el = document.getElementById(elementId);
+      el.parentNode.removeChild(el);
     },
 
     clearField: function(){
@@ -71,6 +78,22 @@ var TaskController = ( function(){
       return newTask;
     },
 
+    deleteData: function(id){
+      var ids, index;
+
+      console.log('delete data method on task controller has ben clicked');
+
+      ids = data.task.map( function (cur){
+        return cur.id;
+      });
+
+      index = ids.indexOf(id);
+
+      if (ids !== -1){
+        data.task.splice(index, 1);
+      }
+    },
+
     checkData: function(){
       console.log(data);
     }
@@ -92,6 +115,11 @@ var AppController = ( function(ctrlView, ctrlTask){
         addTask();
       }
     });
+
+    document.getElementById('list').addEventListener('click', function(e){
+      e.preventDefault();
+      deleteTask(e);
+    })
   }
   
   var addTask = function(){
@@ -112,8 +140,18 @@ var AppController = ( function(ctrlView, ctrlTask){
   
   }
 
-  var deleteTask = function(){
-    console.log('tombol delete clicked');
+  var deleteTask = function(e){
+    var listId, splitId, id;
+    
+    listId = e.target.parentNode.parentNode.id;
+    splitId = listId.split('-');
+    id = parseInt(splitId[1]);
+
+    // 1. delete task from the model and data structure
+    ctrlTask.deleteData(id);
+
+    // 2. update the UI
+    ctrlView.deleteList(listId);
   }
 
   return {

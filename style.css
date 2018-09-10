@@ -38,7 +38,12 @@ ul li {
   margin-top: 5px;
 }
 
-.delete-list{
+#delete-list{
   font-size: 10px;
   margin-left: 50px;
+  color: black;
+}
+
+#delete-list:hover {
+  text-decoration: none;
 }
