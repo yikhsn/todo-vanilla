@@ -3,34 +3,32 @@ var ViewController = ( function(){
   // public method for setter and getter
   return {
     
+    // method for return the data added in input fields
     getData: function(){
       return {
         task: document.getElementById('new-list').value
       }
     },
 
-    testing: function(){
-      console.log(document.getElementById('new-list').value);
-    },
-
+    // method for update the new list to the ui
     addList: function(task){
       var taskHtml;
   
       taskHtml = 
         '<li id="list-%id%" class="single-list">' +
-          '<div class="title-list">' +
-            '<input type="checkbox" class="checked-list">' +
+          '<span class="title-list">' +
             '%desc%' +
-          '<a href="" id="delete-list">Delete</a>' +
-          '</div>' +
+            '<a href="" class="text-right" id="delete-list">Delete</a>' +
+          '</span>' +
         '</li>';
 
       taskHtml = taskHtml.replace('%id%', task.id);
       taskHtml = taskHtml.replace('%desc%', task.desc);
   
-      document.getElementById('list').insertAdjacentHTML('beforeend', taskHtml);
+      document.querySelector('.list').insertAdjacentHTML('beforeend', taskHtml);
     },
 
+    // method for delete list from the ui
     deleteList: function(elementId){
       var el;
 
@@ -38,6 +36,7 @@ var ViewController = ( function(){
       el.parentNode.removeChild(el);
     },
 
+    // method for cleat input fields after task added
     clearField: function(){
       document.getElementById('new-list').value = '';
     }
@@ -46,18 +45,21 @@ var ViewController = ( function(){
 
 var TaskController = ( function(){
   
+  // constructor for create new added task
   var Task = function(id, desc, status){
     this.id = id;
     this.desc = desc;
     this.isCompleted = status;
   }
 
+  // data structure for store task list
   var data = {
     task: []
   }
 
   return {
 
+    // method for create new task and add data to the data structure
     addData: function(task){
       var id, newTask;
 
@@ -68,20 +70,16 @@ var TaskController = ( function(){
         id = 1;
       }
 
-      // create the new task
       newTask = new Task(id, task, false);
 
-      // store the task to the data structure
       data.task.push(newTask);
 
-      // return the new task created before 
       return newTask;
     },
 
+    // method for delete task data from the data structure
     deleteData: function(id){
       var ids, index;
-
-      console.log('delete data method on task controller has ben clicked');
 
       ids = data.task.map( function (cur){
         return cur.id;
@@ -104,6 +102,7 @@ var TaskController = ( function(){
 
 var AppController = ( function(ctrlView, ctrlTask){
 
+  // method for setup or initialize the event listener when app started
   var setupEventListener = function(){
     
     // event for add data when add list button clicked
@@ -116,51 +115,58 @@ var AppController = ( function(ctrlView, ctrlTask){
       }
     });
 
-    document.getElementById('list').addEventListener('click', function(e){
+    // event for delete data when the delete button clicked 
+    document.querySelector('.list').addEventListener('click', function(e){
       e.preventDefault();
-      deleteTask(e);
-    })
+      deleteTask(e);      
+    });
+  }
+
+  var changeBackgroundList = function(){
+    console.log('checkbox clicked');
   }
   
+  // method to controll the add new task functionality
   var addTask = function(){
-
     var input, task;
 
-    // get input from the view controller
+    // get input
     input = ctrlView.getData();
 
-    // create and add new task to the task controller 
+    // update data structure
     task = ctrlTask.addData(input.task);
 
-    // add and update the view
+    // update list with new task
     ctrlView.addList(task);
 
-    // clear the input form
+    // clear input fields
     ctrlView.clearField();
-  
   }
 
+  // method for control delete task functionality with event delegation
   var deleteTask = function(e){
     var listId, splitId, id;
-    
+  
     listId = e.target.parentNode.parentNode.id;
+
     splitId = listId.split('-');
     id = parseInt(splitId[1]);
-
-    // 1. delete task from the model and data structure
+    
+    // delete the task data 
     ctrlTask.deleteData(id);
-
-    // 2. update the UI
+    
+    // update the UI
     ctrlView.deleteList(listId);
   }
 
   return {
 
+    // method for setup event listener whom can be accessed from the outside
     init: function(){
       setupEventListener();
-      console.log('Todo has been started');
+      console.log('App has been started');
     }
-      
+    
   };
 
 })(ViewController, TaskController);
