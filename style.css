@@ -1,19 +1,36 @@
+:root {
+  --primary-color: #2c3e50;
+  --primary-darker: #202d3a;
+  --primary-lighter: #44607c;
+  --secondary-color: #b5c6d6;
+
+  --bg-color: #ecf0f1;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-size: 20px;
+  color: var(--primary-color);
+}
+
 #app {
-  margin: 0 300px;
+  margin: 0 20%;
+  text-align: center;
 }
 
 #header-container{
-  padding: 20px 0;
+  font-size: 80%;
+  font-weight: 300;
+  padding: 5px 0;
   border-bottom: 1px solid #eee;
 }
 
 .body-container{
   margin: 20px 0;
-}
-
-#body-head{
-  padding: 10px;
-  margin-bottom: 20px;
 }
 
 ul {
@@ -26,19 +43,40 @@ ul li {
 }
 
 .single-list{
-  padding: 10px 20px;
+  min-height: 20px;
+  padding:  15px 20px 12px 20px;
+  color: var(--primary-darker);
+  font-size: 70%;
+  text-align: left;
   border-radius: 20px;
   margin-bottom: 10px;
   border: 1px solid #eee;
 }
 
 #delete-list{
-  font-size: 10px;
-  text-align: right;
-  margin-left: 50px;
-  color: black;
+  color: var(--primary-color);
+  font-size: 80%;
+  float: right;
+  text-decoration: none;
 }
 
 #delete-list:hover {
-  text-decoration: none;
+  color: var(--primary-lighter);
+}
+
+#add-list {
+  display: inline-block;
+  width: 100%;
+}
+
+#new-list {
+  width: 80%;
+  height: 40px;
+  color: var(--primary-lighter);
+  border: 1px solid var(--secondary-color);
+  background-color: #fff;
+}
+
+#add-btn {
+  width: 20%;
 }
